@@ -1,0 +1,91 @@
+= Examen de Programmation n-Tiers
+
+Session 1 - 2019-2020
+
+Vous devez cloner ce repository git au début de l'épreuve :
+
+- dans votre navigateur ouvert sur le repo git de l'examen (celui-ci),
+cliquez sur l'icône "Cloner" en haut à gauche ; prenez le lien HTTP et copiez l'URL `https://...` qui s'affiche.
+
+- avec IntelliJ dans le menu "File -> New -> Project from version control..."
+collez l'URL précédente dans le champs URL, choisissez un répertoire de destination,
+puis cliquez sur "cloner".
+
+Vous devez rendre le résultat de votre travail sur ce même repository
+avant la fin de l'épreuve (`git commit` + `git push` ).
+
+== Le sujet
+
+Vous devez mettre en place une application JFX
+pour échanger des bons plans (promos, réductions, prêt de portables, distributions gratuites, ...)
+entre étudiants.
+
+Votre application JFX devra permettre au _minimum_ de :
+
+* A partir de la fenêtre principale :
+
+- créer un compte personnel en fournissant son numéro d'étudiant, son nom, son prénom et sa date de naissance
+- ou de se connecter avec comme login son numéro d'étudiant et comme mot de passe sa date de naissance
+
+* Après la connexion :
+
+- d'enregistrer un bon plan en fournissant un thème, une description, la date de fin du bon plan et
+éventuellement un email de contact ou un lien web (String) ;
+si c'est le premier bon plan de ce thème, ce thème est créé.
+- d'afficher la liste des bons plans pour un thème choisi dans la liste des thèmes
+- de modifier le lien (email ou url) dans un bon plan
+(autorisé uniquement pour l'étudiant qui l'a posté).
+
+Vous devrez vous assurer de la validité des données saisies avant d'appeler les services
+(numéro d'étudiant, nom/prénom/thème de taille 2 minimum, date ...)
+
+== Le modèle
+
+Le code du modèle est fourni dans le code initial du projet.
+
+Un exemple d'utilisation du service de ce modèle (main de la classe Service) :
+[source,java]
+----
+IService service = new Service();
+
+// enregistrement d'un nouvel étudiant
+service.enregistrer("o0123456","yo", "yo", LocalDate.of(2010,02,02));
+// connexion de cet étudiant etu1
+Etudiant etu1 = service.login("o0123456","2010-02-02");
+// enregistrement d'un bon plan par etu1
+service.enregistrerBonPlan(
+        etu1.getNoEtudiant(),
+        "jeux",
+        "Jeu Grand Theft Auto V (GTA 5) - Premium Édition sur PC GRATUIT",
+        LocalDateTime.of(2020,05,21,17,00),
+        "https://www.epicgames.com/store/fr/free-games"
+);
+// enregistrement d'un nouvel étudiant
+service.enregistrer("o1234567","fred", "fred", LocalDate.of(2000,01,01));
+// connexion du deuxième étudiant etu2
+Etudiant etu2 = service.login("o1234567","2000-01-01");
+// enregistrement de bons plans sans lien par etu2
+long idBonPlan = service.enregistrerBonPlan(
+        etu2.getNoEtudiant(),
+        "jeux",
+        " Assassin's Creed Odyssey: Discovery Tour - Grèce Antique & Égypte Antique sur PC GRATUIT",
+        LocalDateTime.of(2020,05,21,11,59)
+);
+service.enregistrerBonPlan(
+        etu2.getNoEtudiant(),
+        "vacances",
+        "INTEX Licorne gonflable - 198x140x97cm - 12,34€",
+        LocalDateTime.of(2020,06,27,12,00),
+        "https://www.amazon.fr/Intex-Licorne-Gonflable-Multicolore-201x140x97cm/dp/B0756ZN4J7"
+);
+// affichage de la liste de tous les bons plans par theme
+service.listeDesThemes().forEach( theme -> {
+    System.out.println("+ theme " + theme + " :");
+    service.listeBonsPlansParTheme(theme).forEach(System.out::println);
+});
+// modification du lien sur un bon plan de etu2
+service.modifierLienBonPlan(etu2.getNoEtudiant(), idBonPlan,"https://store.ubi.com/fr/game?pid=5d4040cd5cdf9a07d09464ac");
+// affichage des bons plans (avec la mise à jour) de l'étudiant etu2
+System.out.println("+ après mise à jour, bons plans de "+etu2.getNom());
+service.listeBonsPlansParEtudiant(etu2.getNoEtudiant()).forEach(System.out::println);
+----

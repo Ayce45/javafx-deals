@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="490.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.vue.Plan">
+    <children>
+        <Pane prefHeight="490.0" prefWidth="620.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <Label fx:id="numero" layoutX="15.0" layoutY="22.0" text="o2195962">
+               <font>
+                  <Font name="Roboto Light" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="245.0" layoutY="15.0" text="Bon Plan">
+               <font>
+                  <Font name="Roboto Light" size="27.0" />
+               </font>
+            </Label>
+             <JFXButton buttonType="RAISED" defaultButton="true" layoutX="527.0" layoutY="442.0" onAction="#btn_cree" prefHeight="32.0" prefWidth="79.0" ripplerFill="WHITE" style="-fx-background-color: #2196F3;" text="Nouveau" textAlignment="CENTER" textFill="WHITE" />
+             <TableView fx:id="plans" layoutX="15.0" layoutY="128.0" prefHeight="288.0" prefWidth="591.0">
+            </TableView>
+            <JFXComboBox fx:id="theme" focusColor="#2196f3" layoutX="456.0" layoutY="21.0" onAction="#select_theme" prefWidth="150.0" promptText="Thème" unFocusColor="#2196f3" />
+            <JFXButton buttonType="RAISED" cancelButton="true" layoutX="18.0" layoutY="442.0" onAction="#btn_deco" prefHeight="32.0" prefWidth="89.0" ripplerFill="WHITE" style="-fx-background-color: #2196F3;" text="Deconnexion" textAlignment="CENTER" textFill="WHITE" />
+            <VBox layoutX="15.0" layoutY="62.0" prefHeight="65.0" prefWidth="591.0" spacing="4.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="575.0" text="Pour modifier le lien d'un bon plan qui vous appartient, il faut faire un clique droit -&gt; modifier" textAlignment="CENTER">
+                     <font>
+                        <Font name="Roboto Light" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label lineSpacing="3.0" prefHeight="17.0" prefWidth="575.0" text="Pour supprimer un bon plan qui vous appartient, il faut faire un clique droit -&gt; supprimer" textAlignment="CENTER">
+                     <font>
+                        <Font name="Roboto Light" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="17.0" prefWidth="575.0" text="Pour ouvir le lien d'un bon plan dans votre navigateur ou envoyer un mail au contact, il faut double cliquer" textAlignment="CENTER">
+                     <font>
+                        <Font name="Roboto Light" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+        </Pane>
+    </children>
+</AnchorPane>
